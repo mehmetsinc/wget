@@ -56,7 +56,7 @@ elif [[ $hostname == $slave_hostname ]]; then
 
     # Slave Sunucuda Replication Ayarları Yapılıyor
     echo "[3/4] Slave Sunucuda Replication Ayarları Yapılıyor..."
-    mysql -u root -e "CHANGE MASTER TO MASTER_HOST='$master_ip', MASTER_USER='repl_user', MASTER_PASSWORD='repl_password', MASTER_AUTO_POSITION=1;"
+    mysql -u root -e "CHANGE MASTER TO MASTER_HOST='$master_ip', MASTER_USER='repl_user', MASTER_PASSWORD='repl_password';"
     mysql -u root -e "START SLAVE;"
 
     echo "Slave Sunucu yapılandırması tamamlandı."
