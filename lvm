@@ -1,0 +1,17 @@
+#!/bin/bash
+
+apt-get install -y lvm2
+
+pvcreate /dev/vdb
+
+vgcreate vg_data /dev/vdb
+
+lvcreate -l 100%FREE -n lv_data vg_data
+
+mkfs.ext4 /dev/vg_data/lv_data
+
+mkdir /data
+
+mount /dev/vg_data/lv_data /data
+
+echo '/dev/vg_data/lv_data /data ext4 defaults 0 0' >> /etc/fstab
