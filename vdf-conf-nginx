@@ -1,0 +1,58 @@
+server {
+    listen 80;
+    listen [::]:80;
+    server_name _;
+
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    location / {
+        alias /home/vodafone-sftp/sftp/;
+        autoindex on;
+        index index.html;
+        try_files $uri $uri/ =404;
+    }
+
+    location /download/ {
+        alias /home/vodafone-sftp/sftp/;
+        autoindex on;
+        try_files $uri $uri/ =404;
+    }
+
+    location /kepler01/ {
+        alias /home/vodafone-sftp/sftp/msincuwcopy/html/kepler01/;
+        index index.html;
+        autoindex off;
+    }
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name _;
+
+    ssl_certificate /etc/nginx/ssl/smartest.crt;
+    ssl_certificate_key /etc/nginx/ssl/smartest.key;
+
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    location / {
+        alias /home/vodafone-sftp/sftp/;
+        autoindex on;
+        index index.html;
+        try_files $uri $uri/ =404;
+    }
+
+    location /download/ {
+        alias /home/vodafone-sftp/sftp/;
+        autoindex on;
+        try_files $uri $uri/ =404;
+    }
+
+    location /kepler01/ {
+        alias /home/vodafone-sftp/sftp/msincuwcopy/html/kepler01/;
+        index index.html;
+        autoindex off;
+    }
+}
