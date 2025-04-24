@@ -1,10 +1,10 @@
 server {
     listen 80;
     listen [::]:80;
-    server_name _;
+    server_name tt-electra.ngncloud.com.tr;
 
     root /var/www/html;
-    index index.html index.htm index.nginx-debian.html;
+    index index.html index.htm;
 
     location / {
         alias /home/vodafone-sftp/sftp/;
@@ -29,13 +29,16 @@ server {
 server {
     listen 443 ssl;
     listen [::]:443 ssl;
-    server_name _;
+    server_name tt-electra.ngncloud.com.tr;
 
-    ssl_certificate /etc/ssl/private/www.sslelc.electra-tele.com.crt;
-    ssl_certificate_key /etc/ssl/private/www.sslelc.electra-tele.com.key;
+    ssl_certificate     /etc/nginx/ssl/star-ngncloud.crt;
+    ssl_certificate_key /etc/nginx/ssl/star-ngncloud.key;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
 
     root /var/www/html;
-    index index.html index.htm index.nginx-debian.html;
+    index index.html index.htm;
 
     location / {
         alias /home/vodafone-sftp/sftp/;
