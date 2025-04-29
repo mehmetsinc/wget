@@ -3,6 +3,7 @@ server {
     listen [::]:80;
     server_name tt-electra.ngncloud.com.tr;
 
+    client_max_body_size 0;
     root /var/www/html;
     index index.html index.htm;
 
@@ -11,18 +12,37 @@ server {
         autoindex on;
         index index.html;
         try_files $uri $uri/ =404;
+        
+        # WebDAV ayarları ekleniyor:
+        dav_methods PUT DELETE MKCOL COPY MOVE;
+        dav_ext_methods PROPFIND OPTIONS;
+        create_full_put_path on;
+        dav_access user:rw group:rw all:r;
+        client_body_temp_path /tmp/nginx_client_body;
     }
 
     location /download/ {
         alias /home/vodafone-sftp/sftp/;
         autoindex on;
         try_files $uri $uri/ =404;
+        
+        dav_methods PUT DELETE MKCOL COPY MOVE;
+        dav_ext_methods PROPFIND OPTIONS;
+        create_full_put_path on;
+        dav_access user:rw group:rw all:r;
+        client_body_temp_path /tmp/nginx_client_body;
     }
 
     location /kepler01/ {
-        alias /home/vodafone-sftp/sftp/msincuwcopy/html/kepler01/;
+        alias /home/vodafone-sftp/sftp/msincwwwcopy/html/kepler01/;
         index index.html;
         autoindex off;
+        
+        dav_methods PUT DELETE MKCOL COPY MOVE;
+        dav_ext_methods PROPFIND OPTIONS;
+        create_full_put_path on;
+        dav_access user:rw group:rw all:r;
+        client_body_temp_path /tmp/nginx_client_body;
     }
 }
 
@@ -31,8 +51,9 @@ server {
     listen [::]:443 ssl;
     server_name tt-electra.ngncloud.com.tr;
 
-    ssl_certificate     /etc/nginx/ssl/star-ngncloud.crt;
-    ssl_certificate_key /etc/nginx/ssl/star-ngncloud.key;
+    client_max_body_size 0;
+    ssl_certificate     /etc/nginx/ssl/ngncloudwildcardfullchain.pem;
+    ssl_certificate_key /etc/nginx/ssl/ngncloudwildcardkey.pem;
 
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers HIGH:!aNULL:!MD5;
@@ -45,17 +66,35 @@ server {
         autoindex on;
         index index.html;
         try_files $uri $uri/ =404;
+        
+        dav_methods PUT DELETE MKCOL COPY MOVE;
+        dav_ext_methods PROPFIND OPTIONS;
+        create_full_put_path on;
+        dav_access user:rw group:rw all:r;
+        client_body_temp_path /tmp/nginx_client_body;
     }
 
     location /download/ {
         alias /home/vodafone-sftp/sftp/;
         autoindex on;
         try_files $uri $uri/ =404;
+        
+        dav_methods PUT DELETE MKCOL COPY MOVE;
+        dav_ext_methods PROPFIND OPTIONS;
+        create_full_put_path on;
+        dav_access user:rw group:rw all:r;
+        client_body_temp_path /tmp/nginx_client_body;
     }
 
     location /kepler01/ {
-        alias /home/vodafone-sftp/sftp/msincuwcopy/html/kepler01/;
+        alias /home/vodafone-sftp/sftp/msincwwwcopy/html/kepler01/;
         index index.html;
-        autoindex off;
+        autoindex on;
+        
+        dav_methods PUT DELETE MKCOL COPY MOVE;
+        dav_ext_methods PROPFIND OPTIONS;
+        create_full_put_path on;
+        dav_access user:rw group:rw all:r;
+        client_body_temp_path /tmp/nginx_client_body;
     }
 }
